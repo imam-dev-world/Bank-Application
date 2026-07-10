@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.Model.User;
 import com.example.demo.datatransferobject.LoginRequest;
+import com.example.demo.datatransferobject.LoginResponse;
 import com.example.demo.datatransferobject.RegisterRequest;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.AuthRepo;
@@ -39,9 +40,10 @@ public class AuthService {
 		return "register completed";
 	}
 	
-	public String loginuser(LoginRequest log) {
+	public LoginResponse loginuser(LoginRequest log) {
 		am.authenticate(new UsernamePasswordAuthenticationToken(log.getEmail(), log.getPassword()));
 		User user=repo.findByEmail(log.getEmail()).orElseThrow(()->new UserNotFoundException("User not found"));
-		return jwt.generateToken(user);
+		String token = jwt.generateToken(user);
+		return new LoginResponse(token,user.getId(),user.getName(),user.getEmail());
 	}
 }	

@@ -26,12 +26,12 @@ public class AccountController {
 		return acc.createAccount(a);
 	}
 	
-	@GetMapping("getaccount/{id}")
+	@GetMapping("/getaccount/{id}")
 	public AccountRequestResponse getAccount(@PathVariable long id) {
 		return acc.getAccount(id);
 	}
 	
-	@GetMapping("getallaccount/{id}")
+	@GetMapping("/getallaccount/{id}")
 	public List<AccountRequestResponse> getAllAccount(@PathVariable long id) {
 		return acc.getAllAccount(id);
 	}
