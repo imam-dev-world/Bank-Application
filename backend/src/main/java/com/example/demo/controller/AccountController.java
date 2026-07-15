@@ -21,9 +21,9 @@ public class AccountController {
 	@Autowired
 	AccountService acc;
 	
-	@PostMapping("/create")
-	public String createAccount(@Valid @RequestBody CreateAccountRequest a) {
-		return acc.createAccount(a);
+	@PostMapping("/create/{id}")
+	public AccountRequestResponse createAccount(@Valid @PathVariable long id,@RequestBody CreateAccountRequest a) {
+		return acc.createAccount(id,a);
 	}
 	
 	@GetMapping("/getaccount/{id}")

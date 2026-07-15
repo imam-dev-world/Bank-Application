@@ -25,20 +25,26 @@ public class AccountService {
 	@Autowired
 	AuthRepo userrepo;
 	
-	public String createAccount(CreateAccountRequest acc) {
+	public AccountRequestResponse createAccount(long id,CreateAccountRequest acc) {
 		Account account = new Account();
-		User user = userrepo.findById(acc.getUserId()).orElseThrow(()-> new UserNotFoundException("User not founded"));
+		AccountRequestResponse resp=new AccountRequestResponse();
+		User user = userrepo.findById(id).orElseThrow(()-> new UserNotFoundException("User not founded"));
 		account.setUser(user);
 		String accountType= acc.getAccountType().toUpperCase();
+		String accountNumber;
 			if(accountType.equals("SAVINGS") || accountType.equals("CURRENT")) {
-				String accountNumber = "ACC" + System.currentTimeMillis();
+				accountNumber = "ACC" + System.currentTimeMillis();
 				account.setAccountNumber(accountNumber);
 				account.setAccountType(accountType);
 				repo.save(account);
 			}else {
 				throw new InvalidAccountTypeException("Invalid account type select SAVINGS or CURRENT");
 			}
-		return "Account created successfully";
+			resp.setAccountNumber(accountNumber);
+			resp.setAccountType(accountType);
+			resp.setBalance(account.getBalance());
+			resp.setId(account.getId());
+		return resp;
 	}
 	
 	public AccountRequestResponse getAccount(long id) {
