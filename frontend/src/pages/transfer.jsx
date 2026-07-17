@@ -19,7 +19,7 @@ export const Transfer = () => {
                     setLoads(false)
                     return
                 }
-                const response = await axios.get(`http://localhost:8080/account/getaccount/${user.userId}`, { headers: { Authorization: `Bearer ${user.token}` } });
+                const response = await axios.get(`http://localhost:8080/account/getallaccount/${user.userId}`, { headers: { Authorization: `Bearer ${user.token}` } });
                 setfromAccount(response.data.id);
                 setLoads(false)
 
@@ -77,8 +77,8 @@ export const Transfer = () => {
                 value={amount}
                 onChange={e => setAmount(e.target.valueAsNumber || -1)}
             />
-            <button onClick={handleTransfer} disabled={loads}>{loads?"please wait...":"Transfer"}</button>
-            <p>{error===""?message:error}</p> 
+            <button onClick={handleTransfer} disabled={loads}>{loads ? "please wait..." : "Transfer"}</button>
+            <p>{error === "" ? message : error}</p>
         </>
     )
 }

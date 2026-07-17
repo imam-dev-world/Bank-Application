@@ -22,7 +22,7 @@ public class AccountController {
 	AccountService acc;
 	
 	@PostMapping("/create/{id}")
-	public AccountRequestResponse createAccount(@Valid @PathVariable long id,@RequestBody CreateAccountRequest a) {
+	public AccountRequestResponse createAccount(@PathVariable long id,@RequestBody @Valid CreateAccountRequest a) {
 		return acc.createAccount(id,a);
 	}
 	
