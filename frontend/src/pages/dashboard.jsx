@@ -1,3 +1,4 @@
+import styles from "./dashboard.module.css"
 import axios from "axios"
 import { AuthContext } from "../context/Authcontext"
 import { useContext, useEffect, useState } from "react"
@@ -49,25 +50,46 @@ export const Dashboard = () => {
             setshowCreateModal(false)
         }
     }
-    const handleNavigation = () =>{
+    const handleNavigation = () => {
         navigate("/transfer")
     }
     return (
-        <>
-            <h1>welcome {user.name}</h1>{account.length === 0 ? <p>You have no account yet. Please create one.</p> : <h1>Balance: {account[0].balance}</h1>}
-            {account.length!==0&&<button onClick={handleNavigation}>Transfer Amount</button>}
-            <button onClick={handleOpenModal}>+ New Account</button>
-            {account.length !== 0&&<History accountId={account[0].id}/>}
-            {showCreateModal && <select name="Accounttype" id="Accounttype" value={accountType} onChange={(e) => setAccountType(e.target.value)}>
-                <option value="Savings">Savings</option>
-                <option value="Current">Current</option>
-            </select>}
-            {showCreateModal && (
-                <>
-                    <button onClick={handleCreateAccount}>Create</button>
-                    <button onClick={() => setshowCreateModal(false)}>Cancel</button>
-                </>
-            )}
-        </>
+        <div className={`p-5 min-vh-100 ${styles.dashboardWrapper}`}>
+
+            <section className={`d-flex justify-content-between align-items-center mb-4 ${styles.dashboardHeader}`}>
+                <div>
+                    <h3>Welcome, {user.name}</h3>{account.length === 0 ? <p>You have no account yet. Please create one.</p> : <span> Your Balance: ₹{account[0].balance}</span>}
+                </div>
+                <div className="d-flex gap-2">
+                    {account.length !== 0 && <button className="btn btn-primary fw-semibold" onClick={handleNavigation}>Transfer Amount</button>}
+                    <button className="btn btn-outline-primary bg-white fw-semibold" onClick={handleOpenModal}>+ New Account</button>
+                </div>
+            </section>
+
+            <section className={`d-flex flex-column bg-white mt-3 mb-3 p-3 gap-3 ${styles.newAccountPanel}`}>
+
+                {showCreateModal && <span>NEW ACCOUNT</span>}
+
+                {showCreateModal && (
+                    <div d-flex >
+                        <select name="Accounttype" id="Accounttype" value={accountType} onChange={(e) => setAccountType(e.target.value)}>
+                            <option value="Savings">Savings</option>
+                            <option value="Current">Current</option>
+                        </select>
+                    </div>
+                )}
+
+                {showCreateModal && (
+                    <div>
+                        <button onClick={handleCreateAccount}>Create</button>
+                        <button onClick={() => setshowCreateModal(false)}>Cancel</button>
+                    </div>
+                )}
+            </section>
+
+            <section className={` ${styles.history}`}>
+                {account.length !== 0 && <History accountId={account[0].id} />}
+            </section>
+        </div>
     )
 }

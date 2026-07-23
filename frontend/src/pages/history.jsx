@@ -1,6 +1,8 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../context/Authcontext"
 export const History = ({ accountId }) => {
+    const {user} = useContext(AuthContext)
     const [transactionHistory, settransactionHistory] = useState([]);
     const [error, setError] = useState("");
     const [load, setLoad] = useState(false);

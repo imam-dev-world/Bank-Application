@@ -4,7 +4,8 @@ import { useContext, useEffect, useState } from "react"
 
 export const Transfer = () => {
 
-    const [fromAccount, setfromAccount] = useState(null)
+    const [account, setAccount] = useState([])
+    const [fromAccount, setfromAccount] = useState("")
     const [toAccount, settoAccount] = useState(0)
     const [amount, setAmount] = useState(0)
     const [loads, setLoads] = useState(false)
@@ -20,9 +21,10 @@ export const Transfer = () => {
                     return
                 }
                 const response = await axios.get(`http://localhost:8080/account/getallaccount/${user.userId}`, { headers: { Authorization: `Bearer ${user.token}` } });
-                setfromAccount(response.data.id);
+                setAccount(response.data);
+                setfromAccount(response.data[0].id)
                 setLoads(false)
-
+                console.log(response.data)
             }
             catch (err) {
                 setLoads(false)
@@ -49,11 +51,15 @@ export const Transfer = () => {
         }
         try {
             setLoads(true)
+            console.log(fromAccount)
             const response = await axios.post("http://localhost:8080/transactions/transfer", { fromAccount, toAccount, amount }, { headers: { Authorization: `Bearer ${user.token}` } });
             settoAccount(0);
             setAmount(0)
             setLoads(false)
             setMessage(`Your amount ${amount} send successfully to ${toAccount}`)
+            const resp = await axios.get(`http://localhost:8080/account/getallaccount/${user.userId}`, { headers: { Authorization: `Bearer ${user.token}` } });
+            setAccount(resp.data);
+            setfromAccount(resp.data[0].id)
         } catch (err) {
             setLoads(false)
             setError(err.message)
@@ -62,7 +68,11 @@ export const Transfer = () => {
 
     return (
         <>
-            <h1>Amount transferring from account Id{fromAccount}</h1>
+            {<select name="accounts" id="accounts" value={fromAccount} onChange={(e) => setfromAccount(e.target.value)}>
+                {account.map(acc => (
+                    <option key={acc.id} value={acc.id}>{acc.accountNumber} - {acc.balance}</option>
+                ))}
+            </select>}
             <input
                 id="toAccount"
                 type="number"
