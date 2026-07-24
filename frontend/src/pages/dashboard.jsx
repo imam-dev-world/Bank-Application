@@ -58,7 +58,7 @@ export const Dashboard = () => {
 
             <section className={`d-flex justify-content-between align-items-center mb-4 ${styles.dashboardHeader}`}>
                 <div>
-                    <h3>Welcome, {user.name}</h3>{account.length === 0 ? <p>You have no account yet. Please create one.</p> : <span> Your Balance: ₹{account[0].balance}</span>}
+                    <h3>Welcome, {user.name}</h3>{account.length === 0 ? <p>You have no account yet. Please create one.</p> : <span className="text-secondary"> Your Balance: ₹{account[0].balance}</span>}
                 </div>
                 <div className="d-flex gap-2">
                     {account.length !== 0 && <button className="btn btn-primary fw-semibold" onClick={handleNavigation}>Transfer Amount</button>}
@@ -66,28 +66,25 @@ export const Dashboard = () => {
                 </div>
             </section>
 
-            <section className={`d-flex flex-column bg-white mt-3 mb-3 p-3 gap-3 ${styles.newAccountPanel}`}>
 
-                {showCreateModal && <span>NEW ACCOUNT</span>}
-
-                {showCreateModal && (
-                    <div d-flex >
-                        <select name="Accounttype" id="Accounttype" value={accountType} onChange={(e) => setAccountType(e.target.value)}>
+            {showCreateModal && (
+                <section className={`d-flex flex-column mt-3 mb-3 p-3 gap-3 ${styles.newAccountPanel}`}>
+                    <span className="text-secondary">NEW ACCOUNT</span>
+                    <div  >
+                        <select className="w-100 p-2 bg-white rounded-3 border" name="Accounttype" id="Accounttype" value={accountType} onChange={(e) => setAccountType(e.target.value)}>
                             <option value="Savings">Savings</option>
                             <option value="Current">Current</option>
                         </select>
                     </div>
-                )}
 
-                {showCreateModal && (
-                    <div>
-                        <button onClick={handleCreateAccount}>Create</button>
-                        <button onClick={() => setshowCreateModal(false)}>Cancel</button>
+
+                    <div className="d-flex gap-2 ">
+                        <button className="ps-4 pe-4 rounded-3 btn btn-primary fw-semibold" onClick={handleCreateAccount}>Create</button>
+                        <button className="ps-4 pe-4 rounded-3 btn btn-muted bg-white border text-secondary" onClick={() => setshowCreateModal(false)}>Cancel</button>
                     </div>
-                )}
-            </section>
+                </section>)}
 
-            <section className={` ${styles.history}`}>
+            <section>
                 {account.length !== 0 && <History accountId={account[0].id} />}
             </section>
         </div>

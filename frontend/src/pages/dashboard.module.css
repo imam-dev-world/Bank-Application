@@ -1,3 +1,9 @@
 .dashboardWrapper{
     background-color: #eef1f6;
 }
+
+.newAccountPanel{
+    background-color: #f8fafc;
+    border: 2px dashed #f8fafc;
+    border-radius: 10px;
+}

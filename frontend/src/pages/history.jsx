@@ -1,3 +1,4 @@
+import styles from "./history.module.css"
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/Authcontext"
@@ -25,11 +26,11 @@ export const History = ({ accountId }) => {
     }, [accountId])
 
     return (
-        <>
+        <div className= {`bg-white ${styles.historyWrapper}`} >
             {load && <p>Loading transactions...</p>}
             {transactionHistory.length === 0 ? error :
-                <table>
-                    <thead>
+                <table className="table table-hover">
+                    <thead className="table-light">
                         <tr>
                             <th>id</th>
                             <th>type</th>
@@ -41,11 +42,11 @@ export const History = ({ accountId }) => {
                     </thead>
                     <tbody>
                         {transactionHistory.map((transaction) =>
-                            <tr key={transaction.id}><td>{transaction.id}</td><td>{transaction.type}</td><td>{transaction.amount}</td><td>{transaction.direction}</td><td>{transaction.timestamp}</td><td>{transaction.counterpartyAccountId}</td></tr>
+                            <tr key={transaction.id}><td>{transaction.id}</td><td>{transaction.type}</td><td>{transaction.amount}</td><td><span className={transaction.direction==="DEBIT"?styles.badgeDebit:styles.badgeCredit}>{transaction.direction}</span></td><td>{transaction.timestamp}</td><td>{transaction.counterpartyAccountId}</td></tr>
                         )}
                     </tbody>
                 </table>
             }
-        </>
+        </div>
     )
 }

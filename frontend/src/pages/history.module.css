@@ -1,0 +1,23 @@
+.badgeDebit {
+    background-color: #fdecec;
+    color: #d63b3b;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badgeCredit {
+    background-color: #e8f7ee;
+    color: #1e9e52;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.historyWrapper {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+}
