@@ -1,3 +1,4 @@
+import styles from "./transfer.module.css"
 import axios from "axios"
 import { AuthContext } from "../context/Authcontext"
 import { useContext, useEffect, useState } from "react"
@@ -6,8 +7,8 @@ export const Transfer = () => {
 
     const [account, setAccount] = useState([])
     const [fromAccount, setfromAccount] = useState("")
-    const [toAccount, settoAccount] = useState(0)
-    const [amount, setAmount] = useState(0)
+    const [toAccount, settoAccount] = useState("")
+    const [amount, setAmount] = useState(" ")
     const [loads, setLoads] = useState(false)
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
@@ -67,28 +68,42 @@ export const Transfer = () => {
     }
 
     return (
-        <>
-            {<select name="accounts" id="accounts" value={fromAccount} onChange={(e) => setfromAccount(e.target.value)}>
-                {account.map(acc => (
-                    <option key={acc.id} value={acc.id}>{acc.accountNumber} - {acc.balance}</option>
-                ))}
-            </select>}
-            <input
-                id="toAccount"
-                type="number"
-                placeholder="Enter receiver account Id"
-                value={toAccount}
-                onChange={e => settoAccount(e.target.valueAsNumber || -1)}
-            />
-            <input
-                id="amount"
-                type="number"
-                placeholder="Enter amount"
-                value={amount}
-                onChange={e => setAmount(e.target.valueAsNumber || -1)}
-            />
-            <button onClick={handleTransfer} disabled={loads}>{loads ? "please wait..." : "Transfer"}</button>
-            <p>{error === "" ? message : error}</p>
-        </>
+        <div className={`d-flex flex-column justify-content-center align-items-center min-vh-100 ${styles.transferWrapper}`}>
+            <div className={`d-flex flex-column justify-content-center align-items-center gap-3 bg-white p-5 ${styles.transferBox}`}>
+                <h4>Transfer Amount</h4>
+                <div>
+                    <label className="form-label" htmlFor="accounts">From Account</label>
+                    {<select className="form-control" name="accounts" id="accounts" value={fromAccount} onChange={(e) => setfromAccount(e.target.value)}>
+                        {account.map(acc => (
+                            <option key={acc.id} value={acc.id}>{acc.accountNumber} - {acc.balance}</option>
+                        ))}
+                    </select>}
+                </div>
+                <div>
+                    <label className="form-label" htmlFor="toAccount">To Account</label>
+                    <input
+                        className="form-control"
+                        id="toAccount"
+                        type="number"
+                        placeholder="Enter receiver account Id"
+                        value={toAccount}
+                        onChange={e => settoAccount(e.target.valueAsNumber || -1)}
+                    />
+                </div>
+                <div>
+                    <label className="form-label" htmlFor="amount">Amount</label>
+                    <input
+                        className="form-control"
+                        id="amount"
+                        type="number"
+                        placeholder="Enter amount"
+                        value={amount}
+                        onChange={e => setAmount(e.target.valueAsNumber || -1)}
+                    />
+                </div>
+                <button className="btn btn-primary w-100 fw-semibold" onClick={handleTransfer} disabled={loads}>{loads ? "please wait..." : "Transfer"}</button>
+                <p>{error === "" ? message : error}</p>
+            </div>
+        </div>
     )
-}
+} 

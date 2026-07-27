@@ -3,7 +3,7 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/Authcontext"
 export const History = ({ accountId }) => {
-    const {user} = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [transactionHistory, settransactionHistory] = useState([]);
     const [error, setError] = useState("");
     const [load, setLoad] = useState(false);
@@ -11,7 +11,7 @@ export const History = ({ accountId }) => {
         const getHistoryData = async () => {
             try {
                 setLoad(true)
-                const response = await axios.get(`http://localhost:8080/transactions/history/${accountId}`,{ headers: { Authorization: `Bearer ${user.token}` } })
+                const response = await axios.get(`http://localhost:8080/transactions/history/${accountId}`, { headers: { Authorization: `Bearer ${user.token}` } })
                 settransactionHistory(response.data);
                 if (response.data.length === 0) {
                     setError("No Transactions found")
@@ -26,7 +26,7 @@ export const History = ({ accountId }) => {
     }, [accountId])
 
     return (
-        <div className= {`bg-white ${styles.historyWrapper}`} >
+        <div className={`bg-white ${styles.historyWrapper}`} >
             {load && <p>Loading transactions...</p>}
             {transactionHistory.length === 0 ? error :
                 <table className="table table-hover">
@@ -42,7 +42,7 @@ export const History = ({ accountId }) => {
                     </thead>
                     <tbody>
                         {transactionHistory.map((transaction) =>
-                            <tr key={transaction.id}><td>{transaction.id}</td><td>{transaction.type}</td><td>{transaction.amount}</td><td><span className={transaction.direction==="DEBIT"?styles.badgeDebit:styles.badgeCredit}>{transaction.direction}</span></td><td>{transaction.timestamp}</td><td>{transaction.counterpartyAccountId}</td></tr>
+                            <tr key={transaction.id}><td>{transaction.id}</td><td>{transaction.type}</td><td>{transaction.amount}</td><td><span className={transaction.direction === "DEBIT" ? styles.badgeDebit : styles.badgeCredit}>{transaction.direction}</span></td><td>{transaction.timestamp}</td><td>{transaction.counterpartyAccountId}</td></tr>
                         )}
                     </tbody>
                 </table>
