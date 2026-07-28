@@ -62,7 +62,7 @@ export const Dashboard = () => {
                 </div>
                 <div className="d-flex gap-2">
                     {account.length !== 0 && <button className="btn btn-primary fw-semibold" onClick={handleNavigation}>Transfer Amount</button>}
-                    <button className="btn btn-outline-primary bg-white fw-semibold" onClick={handleOpenModal}>+ New Account</button>
+                    <button className="btn btn-outline-primary fw-semibold" onClick={handleOpenModal}>+ New Account</button>
                 </div>
             </section>
 

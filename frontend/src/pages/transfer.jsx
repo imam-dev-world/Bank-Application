@@ -8,7 +8,7 @@ export const Transfer = () => {
     const [account, setAccount] = useState([])
     const [fromAccount, setfromAccount] = useState("")
     const [toAccount, settoAccount] = useState("")
-    const [amount, setAmount] = useState(" ")
+    const [amount, setAmount] = useState("")
     const [loads, setLoads] = useState(false)
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
@@ -25,7 +25,6 @@ export const Transfer = () => {
                 setAccount(response.data);
                 setfromAccount(response.data[0].id)
                 setLoads(false)
-                console.log(response.data)
             }
             catch (err) {
                 setLoads(false)
@@ -87,7 +86,7 @@ export const Transfer = () => {
                         type="number"
                         placeholder="Enter receiver account Id"
                         value={toAccount}
-                        onChange={e => settoAccount(e.target.valueAsNumber || -1)}
+                        onChange={e => settoAccount(e.target.value === "" ? "" : e.target.valueAsNumber)}
                     />
                 </div>
                 <div>
@@ -98,7 +97,7 @@ export const Transfer = () => {
                         type="number"
                         placeholder="Enter amount"
                         value={amount}
-                        onChange={e => setAmount(e.target.valueAsNumber || -1)}
+                        onChange={e => setAmount(e.target.value === "" ? "" : e.target.valueAsNumber)}
                     />
                 </div>
                 <button className="btn btn-primary w-100 fw-semibold" onClick={handleTransfer} disabled={loads}>{loads ? "please wait..." : "Transfer"}</button>
