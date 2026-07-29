@@ -4,14 +4,13 @@ import { AuthContext } from "../context/Authcontext"
 import { useContext, useEffect, useState } from "react"
 
 export const Transfer = () => {
-
+    const [error, setError] = useState({ field: "", message: "" });
     const [account, setAccount] = useState([])
     const [fromAccount, setfromAccount] = useState("")
     const [toAccount, settoAccount] = useState("")
     const [amount, setAmount] = useState("")
+    const [errMessage, seterrMessage] = useState("");
     const [loads, setLoads] = useState(false)
-    const [error, setError] = useState("")
-    const [message, setMessage] = useState("")
     const { user } = useContext(AuthContext)
     useEffect(() => {
         const getdata = async () => {
@@ -28,30 +27,28 @@ export const Transfer = () => {
             }
             catch (err) {
                 setLoads(false)
-                setError(err.message)
+                seterrMessage(err.message)
             }
         }
         getdata()
     }, [user])
     const handleTransfer = async (event) => {
-        setError("")
-        setMessage("")
+        setError({field:"", message:""})
         if (toAccount <= 0) {
-            setError("enter valid toAccount");
+            setError({field:"toAccount", message:"enter valid toAccount"});
             return;
         }
         if (amount <= 0) {
-            setError("enter amount more than 0");
+            setError({ field: "amount", message: "enter amount more than 0" });
             return;
         }
         if (parseInt(fromAccount) === toAccount) {
             console.log(fromAccount)
-            setError("toAccount Id not be same")
+            setError({ field: "toAccount", message: "toAccount Id not be same" });
             return
         }
         try {
             setLoads(true)
-            console.log(fromAccount)
             const response = await axios.post("http://localhost:8080/transactions/transfer", { fromAccount, toAccount, amount }, { headers: { Authorization: `Bearer ${user.token}` } });
             settoAccount(0);
             setAmount(0)
@@ -62,7 +59,8 @@ export const Transfer = () => {
             setfromAccount(resp.data[0].id)
         } catch (err) {
             setLoads(false)
-            setError(err.message)
+            console.log(err.response.data.error)
+            seterrMessage(err.response.data.error)
         }
     }
 
@@ -88,6 +86,7 @@ export const Transfer = () => {
                         value={toAccount}
                         onChange={e => settoAccount(e.target.value === "" ? "" : e.target.valueAsNumber)}
                     />
+                    {error.field==="toAccount"&&<p className="text-danger small mb-0">{error.message}</p>}
                 </div>
                 <div>
                     <label className="form-label" htmlFor="amount">Amount</label>
@@ -99,9 +98,10 @@ export const Transfer = () => {
                         value={amount}
                         onChange={e => setAmount(e.target.value === "" ? "" : e.target.valueAsNumber)}
                     />
+                    {error.field==="amount"&&<p className="text-danger small mb-0">{error.message}</p>}
                 </div>
                 <button className="btn btn-primary w-100 fw-semibold" onClick={handleTransfer} disabled={loads}>{loads ? "please wait..." : "Transfer"}</button>
-                <p>{error === "" ? message : error}</p>
+                {errMessage && <p className="text-danger small">{errMessage}</p>}
             </div>
         </div>
     )
