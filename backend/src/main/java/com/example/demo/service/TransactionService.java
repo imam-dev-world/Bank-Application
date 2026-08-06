@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -103,11 +103,10 @@ public class TransactionService {
 		}
 	}
 	
-	public List<TransactionResponse> getTransactionHistory(long id ) {
-		Account accId =accrepo.findById(id).orElseThrow(()->new AccountNotFoundException("Account not found")); //5
-		List<Transaction> listOfRecord = trans.findTransactionHistory(accId.getId());
-		List<TransactionResponse> result = new ArrayList<>();
-		for (Transaction transaction : listOfRecord) {
+	public Page<TransactionResponse> getTransactionHistory(long id, Pageable pageable ) {
+		Account accId =accrepo.findById(id).orElseThrow(()->new AccountNotFoundException("Account not found"));
+		Page<Transaction> listOfRecord = trans.findTransactionHistory(accId.getId(),pageable);
+		Page<TransactionResponse> result = listOfRecord.map(transaction->{
 	        TransactionResponse resp = new TransactionResponse();
 	        resp.setId(transaction.getId());
 	        resp.setType(transaction.getType());
@@ -125,8 +124,8 @@ public class TransactionService {
 	                resp.setCounterpartyAccountId(transaction.getfromAccount().getId());
 	            }
 	        }
-	        result.add(resp);
-	    }
+	        return resp;
+	    });
 	    return result;
 	}
 }

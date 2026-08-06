@@ -32,4 +32,8 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<Map<String, String>> handleInvalidAccountTypeException (InvalidAccountTypeException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error",ex.getMessage()));
 	}
+	@ExceptionHandler(InsufficientBalanceException.class)
+	public ResponseEntity<Map<String, String>> handleInsufficientBalanceException (InsufficientBalanceException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error",ex.getMessage()));
+	} 
 }
