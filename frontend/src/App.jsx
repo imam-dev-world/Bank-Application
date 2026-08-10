@@ -6,15 +6,19 @@ import './App.css'
 import { Register } from './pages/register'
 import { Login } from './pages/login'
 import { Dashboard } from './pages/dashboard'
-import { AuthProvider } from './context/Authcontext'
+import { AuthContext, AuthProvider } from './context/Authcontext'
 import { ProtectedRoutes } from './protected/ProtectedRoutes'
-import {Navigate} from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { Transfer } from './pages/transfer'
+import { Navbar } from './components/Navbar'
+import { useContext } from 'react'
 
 function App() {
+  const {user} = useContext(AuthContext);
   return (
     <AuthProvider>
     <BrowserRouter>
+    {user && <Navbar/>}
     <div>
     <Routes>
       <Route path="/" element={<Navigate to="/register" />} />
