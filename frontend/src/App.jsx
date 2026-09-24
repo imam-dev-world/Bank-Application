@@ -16,10 +16,9 @@ import { useContext } from 'react'
 function App() {
   const {user} = useContext(AuthContext);
   return (
-    <AuthProvider>
     <BrowserRouter>
-    {user && <Navbar/>}
     <div>
+    {user && <Navbar/>}
     <Routes>
       <Route path="/" element={<Navigate to="/register" />} />
       <Route  path='/register' element={<Register/>} />
@@ -31,7 +30,6 @@ function App() {
     </Routes>
     </div>
     </BrowserRouter>
-    </AuthProvider>
   )
 }
 

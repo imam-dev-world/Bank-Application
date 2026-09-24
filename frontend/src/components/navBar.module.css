@@ -1,0 +1,25 @@
+.navContainer{
+    width: 100%;
+    height: 60px;
+}
+
+.userIcon{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.centerContent{
+    /* background-color: yellow; */
+    height: 58px;
+    width: 40%;
+}
+
+.centerContent > ul{
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
