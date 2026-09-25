@@ -1,7 +1,7 @@
     import userImage from "../assets/user.png";
     import style from "./navBar.module.css"
     import { AuthContext } from "../context/Authcontext"
-    import {useNavigate} from 'react-router-dom'
+    import {useNavigate,NavLink} from 'react-router-dom'
     import { useContext } from "react"
     export const Navbar = () =>{
         const navigate = useNavigate()
@@ -16,21 +16,21 @@
         }
         return (
         <nav className={`d-flex justify-content-around align-items-center ${style.navContainer}` }>
-            <div>🏦 Online Money</div>
-            {/* <div className="nav-link">Dashboard</div>
-            <div>Transfer</div>
-            <div className="d-flex gap-3"><img src={userImage} alt="" className={`${style.userIcon}`}/>Welcome
-            <button  className="btn btn-danger ps-3 pe-3 pt-2 pb-2">Logout</button>
-            </div> */}
-            <div className={`${style.centerContent}`}>
-                <ul >
-                    <li>Dashboard</li>
-                    <li>Transfer</li>
+            <div className="fs-4 fw-bold"> 
+                🏦 Online Money
+            </div>
+            
+            <div >
+                <ul className="d-flex gap-5 list-unstyled">
+                    <li className="mt-3"><NavLink to="/dashboard" className={({ isActive }) => isActive ?`${style.activeState} text-decoration-none`:"text-decoration-none text-reset"}>Dashboard</NavLink> </li> 
+                    <li className="mt-3"><NavLink to="/transfer" className={({ isActive }) => isActive ?
+                    `${style.activeState} text-decoration-none`:"text-decoration-none text-reset"}>Transfer</NavLink></li>
                 </ul>
             </div>
-            <div className="d-flex gap-2 p-5">
-                <img src={userImage} alt="" className={`${style.userIcon}`}/>Welcome
-                <button onClick={handleLogout}>Logout</button>
+
+            <div className="d-flex gap-2">
+                <img src={userImage} alt="" className={`${style.userIcon}  `}/>Welcome
+                <button className="ms-4" onClick={handleLogout}>Logout</button>
             </div>
         </nav>
         )
