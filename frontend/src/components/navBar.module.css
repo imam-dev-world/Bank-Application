@@ -16,3 +16,8 @@
     padding: 8px 14px;
     border-radius: 6px;
 }
+
+.NavLogoutBtn{
+    font-weight: 500 !important;
+    width: 85px;
+}

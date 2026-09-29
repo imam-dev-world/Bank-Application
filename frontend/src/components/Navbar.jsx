@@ -30,7 +30,7 @@
 
             <div className="d-flex gap-2">
                 <img src={userImage} alt="" className={`${style.userIcon}  `}/>Welcome
-                <button className="ms-4" onClick={handleLogout}>Logout</button>
+                <button className={`${style.NavLogoutBtn}  ms-4 btn btn-outline-primary px-3 py-1 rounded-2`} onClick={handleLogout}>Logout</button>
             </div>
         </nav>
         )
