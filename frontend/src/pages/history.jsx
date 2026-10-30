@@ -39,12 +39,12 @@ export const History = ({ accountId }) => {
                 <table className="table table-hover">
                     <thead className="table-light">
                         <tr>
-                            <th>Id</th>
-                            <th>Type</th>
+                            <th>Transaction ID</th>
+                            <th>Transaction Type</th>
                             <th>Amount</th>
                             <th>Direction</th>
-                            <th>TimeStamp</th>
-                            <th>CounterpartyAccountId</th>
+                            <th>Transaction Date</th>
+                            <th>Recipient / Sender Account</th>
                         </tr>
                     </thead>
                     <tbody>

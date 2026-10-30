@@ -54,18 +54,33 @@ export const Dashboard = () => {
         navigate("/transfer")
     }
     return (
-        <div className={`p-5 min-vh-100 ${styles.dashboardWrapper}`}>
+        <div className={`p-4 min-vh-100 ${styles.dashboardWrapper}`}>
 
-            <section className={`d-flex justify-content-between align-items-center mb-4 ${styles.dashboardHeader}`}>
+            <section className={`d-flex justify-content-between align-items-center mb-2 ${styles.dashboardHeader}`}>
                 <div>
-                    <h3>Welcome, {user.name}</h3>{account.length === 0 ? <p>You have no account yet. Please create one.</p> : <span className="text-secondary"> Your Balance: ₹{account[0].balance}</span>}
-                </div>
-                <div className="d-flex gap-2">
-                    {account.length !== 0 && <button className="btn btn-primary fw-semibold" onClick={handleNavigation}>Transfer Amount</button>}
-                    <button className="btn btn-outline-primary fw-semibold" onClick={handleOpenModal}>+ New Account</button>
+                    <h5>Welcome back, {user.name}!</h5>
                 </div>
             </section>
 
+            <section>
+                <div>
+                    {account.length === 0 ? <p>You have no account yet. Please create one.</p>: 
+                    <div>
+                        <span className="text-secondary">Here's your financial overview.</span>
+                        <div className="bg-primary rounded text-white p-3">
+                            <h1>₹{account[0].balance}</h1>
+                            <span>Available balance</span>
+                        </div>
+                    </div> }
+                </div>
+            </section>
+
+            <section>
+                <div className="d-flex justify-content-center align-items-center gap-2 mt-4 mb-4">
+                    {account.length !== 0 && <button className="btn btn-primary fw-semibold w-50 pt-3 pb-3" onClick={handleNavigation}>Transfer Amount</button>}
+                    <button className="btn btn-outline-primary fw-semibold w-50 pt-3 pb-3" onClick={handleOpenModal}>+ New Account</button>
+                </div>
+            </section>
 
             {showCreateModal && (
                 <section className={`d-flex flex-column mt-3 mb-3 p-3 gap-3 ${styles.newAccountPanel}`}>
